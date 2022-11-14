@@ -51,17 +51,19 @@ public class UserAgentPanel extends JPanel {
         initComponent();
         initEvent();
 
-        loadConfig();
+        boolean loadFlag = loadConfig();
 
-        if (UserAgentCore.pcUserAgent.size() == 0 && "".equals(pcTextArea.getText())) {
-            InputStream inputStream = UserAgentCore.class.getClassLoader().getResourceAsStream(DEFAULT_PC_UA_FILE);
-            FileUtil.readLines(inputStream, UserAgentCore.pcUserAgent);
+        if (!loadFlag) {
+            if (UserAgentCore.pcUserAgent.size() == 0 && "".equals(pcTextArea.getText())) {
+                InputStream inputStream = UserAgentCore.class.getClassLoader().getResourceAsStream(DEFAULT_PC_UA_FILE);
+                FileUtil.readLines(inputStream, UserAgentCore.pcUserAgent);
+            }
+            if (UserAgentCore.mobileUserAgent.size() == 0 && "".equals(mobileTextArea.getText())) {
+                InputStream inputStream = UserAgentCore.class.getClassLoader().getResourceAsStream(DEFAULT_MOBILE_UA_FILE);
+                FileUtil.readLines(inputStream, UserAgentCore.mobileUserAgent);
+            }
+            initializeUserAgentTextAreaData();
         }
-        if (UserAgentCore.mobileUserAgent.size() == 0 && "".equals(mobileTextArea.getText())) {
-            InputStream inputStream = UserAgentCore.class.getClassLoader().getResourceAsStream(DEFAULT_MOBILE_UA_FILE);
-            FileUtil.readLines(inputStream, UserAgentCore.mobileUserAgent);
-        }
-        initializeUserAgentTextAreaData();
     }
 
     private void initComponent() {
@@ -115,7 +117,7 @@ public class UserAgentPanel extends JPanel {
         });
     }
 
-    private void loadConfig() {
+    private boolean loadConfig() {
         File configFile = new File(configFilePath);
         if (configFile.exists()) {
             try {
@@ -128,11 +130,13 @@ public class UserAgentPanel extends JPanel {
                 UserAgentCore.pcUserAgent.addAll(pcUAJSONArray.toList(String.class));
                 UserAgentCore.mobileUserAgent.addAll(mobileUAJSONArray.toList(String.class));
                 initializeUserAgentTextAreaData();
+                return true;
             } catch (Exception e) {
                 iBurpExtenderCallbacks.printOutput("配置文件读取失败(Config File Read Fail!)");
                 iBurpExtenderCallbacks.printOutput(e.getMessage());
             }
         }
+        return false;
     }
 
     private void initializeUserAgentTextAreaData() {
