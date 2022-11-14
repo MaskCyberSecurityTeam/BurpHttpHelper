@@ -34,6 +34,12 @@
 
 Ps: **保存后会在插件当前目录下生成config.json文件，不要随意更改哦！**
 
+# 界面预览
+
+![image](https://user-images.githubusercontent.com/30547741/201623743-b8439c9a-ddfc-44c7-8dc9-38ef27727fd8.png)
+
+![image](https://user-images.githubusercontent.com/30547741/201623796-84fff274-1d6f-44c0-b1a2-faaa99c3dbd6.png)
+
 # TODO
 
 ~~1. 随机UserAgent~~
