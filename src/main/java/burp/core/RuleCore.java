@@ -41,11 +41,11 @@ public class RuleCore {
         }
     }
 
-    private static void addOptionAssembly(final List<String> metaDataHeaders, final String headerName, final String headerValue) {
+    public static void addOptionAssembly(final List<String> metaDataHeaders, final String headerName, final String headerValue) {
         metaDataHeaders.add(String.format("%s: %s", headerName, headerValue));
     }
 
-    private static void modifyOptionAssembly(final List<String> metaDataHeaders, final String headerName, final String headerValue) {
+    public static void modifyOptionAssembly(final List<String> metaDataHeaders, final String headerName, final String headerValue) {
         int index = 0;
         for (String header : metaDataHeaders) {
             if (header.contains(headerName)) {
@@ -56,7 +56,7 @@ public class RuleCore {
         }
     }
 
-    private static void removeOptionAssembly(final List<String> metaDataHeaders, final String headerName) {
+    public static void removeOptionAssembly(final List<String> metaDataHeaders, final String headerName) {
         metaDataHeaders.removeIf(header -> header.contains(headerName));
     }
 

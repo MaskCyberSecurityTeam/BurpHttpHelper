@@ -2,6 +2,7 @@ package burp.listener;
 
 import burp.*;
 import burp.core.RuleCore;
+import burp.core.UserAgentCore;
 import burp.ui.Gui;
 
 import java.util.*;
@@ -22,18 +23,19 @@ public class IHttpListenerImpl implements IHttpListener {
 
     @Override
     public void processHttpMessage(int msgType, boolean messageIsRequest, IHttpRequestResponse iHttpRequestResponse) {
-        if (messageIsRequest && gui.validListenerEnabled(msgType)) {
+        if (messageIsRequest && gui.getMainPanel().validListenerEnabled(msgType)) {
 
             byte[] requestByte = iHttpRequestResponse.getRequest();
-
             IRequestInfo iRequestInfo = helpers.analyzeRequest(
                     iHttpRequestResponse.getHttpService(),
                     requestByte
             );
-
             byte[] body = Arrays.copyOfRange(requestByte, iRequestInfo.getBodyOffset(), requestByte.length);
-
             List<String> headers = iRequestInfo.getHeaders();
+
+            if (gui.getMainPanel().getRandomUserAgentCheckBox().isSelected()) {
+                UserAgentCore.assembly(headers, gui);
+            }
             RuleCore.assembly(headers, iRequestInfo.getUrl());
 
             byte[] newReq = helpers.buildHttpMessage(headers, body);

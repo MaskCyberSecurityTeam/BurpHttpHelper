@@ -6,7 +6,7 @@
 
     <groupId>com.mask-sec.burp</groupId>
     <artifactId>BurpHeaderHelper</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -85,6 +85,7 @@
                 <filtering>true</filtering>
                 <includes>
                     <include>info.properties</include>
+                    <include>useragent-*.txt</include>
                 </includes>
             </resource>
         </resources>
