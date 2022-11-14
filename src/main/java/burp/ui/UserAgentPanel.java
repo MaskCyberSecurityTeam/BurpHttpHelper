@@ -16,7 +16,6 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 @Data
 public class UserAgentPanel extends JPanel {
@@ -79,8 +78,8 @@ public class UserAgentPanel extends JPanel {
         configPanel.add(saveButton);
         configPanel.setBorder(new TitledBorder("配置启用(ConfigSwitch)"));
 
-        userAgentTabbedPane.addTab("电脑(PC)", pcTextArea);
-        userAgentTabbedPane.addTab("手机(Mobile)", mobileTextArea);
+        userAgentTabbedPane.addTab("电脑(PC)", new JScrollPane(pcTextArea));
+        userAgentTabbedPane.addTab("手机(Mobile)", new JScrollPane(mobileTextArea));
 
         setLayout(new BorderLayout());
         add(configPanel, BorderLayout.NORTH);
