@@ -42,5 +42,5 @@ Ps: **保存后会在插件当前目录下生成config.json文件，不要随意
 
 # TODO
 
-~~1. 随机UserAgent~~
-  2. response自动解码unicode、url编码
+* ~~随机UserAgent~~
+* response自动解码unicode、url编码
