@@ -14,6 +14,7 @@ public class ConfigKey {
     public static final String SUITE_TOOL_KEY     = "SuiteToolKey";
     public static final String TARGET_TOOL_KEY    = "TargetToolKey";
     public static final String RANDOM_UA_KEY      = "randomUserAgentKey";
+    public static final String RP_AD_KEY          = "repeaterResponseAutoDecodeKey";
 
     public static final String PC_UA_KEY          = "PCUserAgentKey";
     public static final String MOBILE_UA_KEY      = "PCMobileAgentKey";

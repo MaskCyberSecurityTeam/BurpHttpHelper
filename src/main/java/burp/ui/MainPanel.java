@@ -8,7 +8,6 @@ import burp.constant.WindowSize;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import jdk.nashorn.internal.runtime.regexp.joni.Config;
 import lombok.Data;
 import net.miginfocom.swing.MigLayout;
 
@@ -30,6 +29,7 @@ public class MainPanel extends JPanel {
     private JPanel rulePanel;
 
     private JCheckBox randomUserAgentCheckBox;
+    private JCheckBox repeaterResponseAutoDecodeCheckBox;
 
     private JButton addButton;
     private JButton removeButton;
@@ -74,8 +74,10 @@ public class MainPanel extends JPanel {
 
     private void initComponent() {
         randomUserAgentCheckBox = new JCheckBox("随机UA头(Random UA Header)");
+        repeaterResponseAutoDecodeCheckBox = new JCheckBox("RepeaterResponse自动解码(Repeater Response Auto Decode)");
         otherPanel = new JPanel();
         otherPanel.add(randomUserAgentCheckBox);
+        otherPanel.add(repeaterResponseAutoDecodeCheckBox);
         otherPanel.setBorder(new TitledBorder("其他配置(OtherConfig)"));
 
         comparerToolCheckBox = new JCheckBox("对比(Comparer)");
@@ -168,6 +170,7 @@ public class MainPanel extends JPanel {
             config.put(ConfigKey.SUITE_TOOL_KEY, suiteToolCheckBox.isSelected());
             config.put(ConfigKey.TARGET_TOOL_KEY, targetToolCheckBox.isSelected());
             config.put(ConfigKey.RANDOM_UA_KEY, randomUserAgentCheckBox.isSelected());
+            config.put(ConfigKey.RP_AD_KEY, repeaterResponseAutoDecodeCheckBox.isSelected());
             String configJson = JSONUtil.toJsonStr(config);
 
             try (FileWriter fileWriter = new FileWriter(configFilePath)) {
@@ -277,6 +280,7 @@ public class MainPanel extends JPanel {
                 table.addRows(new Vector<>(jsonArray.toList(Rule.class)));
 
                 randomUserAgentCheckBox.setSelected(jsonObject.getBool(ConfigKey.RANDOM_UA_KEY));
+                repeaterResponseAutoDecodeCheckBox.setSelected(jsonObject.getBool(ConfigKey.RP_AD_KEY));
                 comparerToolCheckBox.setSelected(jsonObject.getBool(ConfigKey.COMPARER_TOOL_KEY));
                 decoderToolCheckBox.setSelected(jsonObject.getBool(ConfigKey.DECODER_TOOL_KEY));
                 extenderToolCheckBox.setSelected(jsonObject.getBool(ConfigKey.EXTENDER_TOOL_KEY));
