@@ -9,8 +9,6 @@
     <version>1.2.0</version>
 
     <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -29,7 +27,7 @@
         <dependency>
             <groupId>com.miglayout</groupId>
             <artifactId>miglayout-swing</artifactId>
-            <version>5.3</version>
+            <version>${miglayout-swing.version}</version>
         </dependency>
         <dependency>
             <groupId>cn.hutool</groupId>
@@ -46,19 +44,31 @@
     </repositories>
 
     <build>
+        <finalName>${artifactId}-${project.version}-${compiler-jdk}</finalName>
         <plugins>
+            <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>3.2.0</version>
+                <executions>
+                    <execution>
+                        <id>auto-clean</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.6.0</version>
+                <version>3.10.1</version>
                 <configuration>
-                    <source>${maven.compiler.source}</source>
-                    <target>${maven.compiler.target}</target>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <compilerVersion>${java.version}</compilerVersion>
+                    <executable>${javac-path}</executable>
                     <encoding>${project.build.sourceEncoding}</encoding>
-                    <compilerArguments>
-                        <verbose/>
-                        <bootclasspath>${java.home}/lib/rt.jar</bootclasspath>
-                    </compilerArguments>
                 </configuration>
             </plugin>
             <plugin>
@@ -76,6 +86,7 @@
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
+                    <appendAssemblyId>false</appendAssemblyId>
                 </configuration>
             </plugin>
         </plugins>
@@ -90,4 +101,28 @@
             </resource>
         </resources>
     </build>
+
+    <profiles>
+        <profile>
+            <id>jdk11</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <java.version>11</java.version>
+                <miglayout-swing.version>11.0</miglayout-swing.version>
+                <compiler-jdk>JDK11</compiler-jdk>
+                <javac-path>/Library/Java/JavaVirtualMachines/jdk-11.0.16.jdk/Contents/Home/bin/javac</javac-path>
+            </properties>
+        </profile>
+        <profile>
+            <id>jdk8</id>
+            <properties>
+                <java.version>1.8</java.version>
+                <miglayout-swing.version>5.3</miglayout-swing.version>
+                <compiler-jdk>JDK8</compiler-jdk>
+                <javac-path>/Library/Java/JavaVirtualMachines/jdk1.8.0_341.jdk/Contents/Home/bin/javac</javac-path>
+            </properties>
+        </profile>
+    </profiles>
 </project>
