@@ -37,7 +37,7 @@ public class IHttpListenerImpl implements IHttpListener {
 
             byte[] newReq = helpers.buildHttpMessage(headers, body);
             iHttpRequestResponse.setRequest(newReq);
-        } else if (gui.getMainPanel().getRepeaterResponseAutoDecodeCheckBox().isSelected()) {
+        } else if (gui.getMainPanel().getRepeaterResponseAutoDecodeCheckBox().isSelected() && msgType == IBurpExtenderCallbacks.TOOL_REPEATER) {
             byte[] responseByte = iHttpRequestResponse.getResponse();
             IResponseInfo iResponseInfo = helpers.analyzeResponse(responseByte);
 
