@@ -2,7 +2,6 @@ package burp.ui;
 
 import burp.bean.Rule;
 import burp.core.RuleCore;
-import sun.swing.table.DefaultTableCellHeaderRenderer;
 
 import javax.swing.*;
 import javax.swing.table.*;
@@ -86,20 +85,15 @@ public class RuleTable extends JTable {
 
     protected DefaultTableCellRenderer tableCellRenderer = new DefaultTableCellRenderer();
 
-    protected DefaultTableCellHeaderRenderer tableHeaderRenderer = new DefaultTableCellHeaderRenderer();
-
     RuleTable() {
-        model.setDataVector(data, columnName);
-
         tableCellRenderer.setHorizontalAlignment(JLabel.CENTER);
-        tableHeaderRenderer.setHorizontalAlignment(JLabel.CENTER);
 
         setModel(model);
         setShowGrid(true);
         setRowHeight(30);
         setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         setDefaultRenderer(Object.class, tableCellRenderer);
-        getTableHeader().setDefaultRenderer(tableHeaderRenderer);
+        getTableHeader().setDefaultRenderer(tableCellRenderer);
     }
 
     public void addRow(Rule item) {
