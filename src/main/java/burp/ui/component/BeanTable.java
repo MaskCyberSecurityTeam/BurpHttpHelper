@@ -67,8 +67,8 @@ public abstract class BeanTable<T> extends JTable {
     public abstract Vector<String> initializeColumnName();
 
     public void initializeSetValueAt(Object aValue, int row, int column) {
-        @SuppressWarnings("unchecked") Vector<Object> rowVector = model.getDataVector().elementAt(row);
-        rowVector.setElementAt(aValue, column);
+        T valueAt = (T) getValueAt(row, column);
+        data.setElementAt(valueAt, column);
         model.fireTableCellUpdated(row, column);
     }
 
