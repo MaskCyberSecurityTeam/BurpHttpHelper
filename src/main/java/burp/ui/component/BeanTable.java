@@ -1,4 +1,4 @@
-package burp.ui;
+package burp.ui.component;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;

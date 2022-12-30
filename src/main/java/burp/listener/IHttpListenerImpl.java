@@ -4,7 +4,7 @@ import burp.*;
 import burp.core.AutoDecodeCore;
 import burp.core.RuleCore;
 import burp.core.UserAgentCore;
-import burp.ui.Gui;
+import burp.Gui;
 
 import java.util.*;
 

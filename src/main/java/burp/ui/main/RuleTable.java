@@ -1,7 +1,8 @@
-package burp.ui;
+package burp.ui.main;
 
 import burp.bean.Rule;
 import burp.core.RuleCore;
+import burp.ui.component.BeanTable;
 
 import java.util.Vector;
 

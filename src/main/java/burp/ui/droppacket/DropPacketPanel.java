@@ -1,4 +1,4 @@
-package burp.ui;
+package burp.ui.droppacket;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;

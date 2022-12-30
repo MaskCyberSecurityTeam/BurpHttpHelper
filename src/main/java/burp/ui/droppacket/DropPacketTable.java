@@ -1,6 +1,7 @@
-package burp.ui;
+package burp.ui.droppacket;
 
 import burp.bean.Drop;
+import burp.ui.component.BeanTable;
 
 import java.util.Vector;
 

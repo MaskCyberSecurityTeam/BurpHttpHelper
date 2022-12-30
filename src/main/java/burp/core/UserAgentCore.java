@@ -1,6 +1,6 @@
 package burp.core;
 
-import burp.ui.Gui;
+import burp.Gui;
 
 import java.io.*;
 import java.util.*;

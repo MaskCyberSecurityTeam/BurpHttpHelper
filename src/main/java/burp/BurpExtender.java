@@ -3,7 +3,6 @@ package burp;
 import burp.constant.ProjectInfo;
 import burp.listener.IHttpListenerImpl;
 import burp.ui.ContextMenuGui;
-import burp.ui.Gui;
 
 import javax.swing.*;
 import java.awt.*;

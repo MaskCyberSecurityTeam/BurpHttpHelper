@@ -1,4 +1,4 @@
-package burp.ui;
+package burp.ui.useragent;
 
 import burp.IBurpExtenderCallbacks;
 import burp.constant.ConfigKey;

@@ -1,10 +1,11 @@
-package burp.ui;
+package burp.ui.main;
 
 import burp.IBurpExtenderCallbacks;
 import burp.bean.Rule;
 import burp.constant.ConfigKey;
 import burp.constant.RuleActionOption;
 import burp.constant.WindowSize;
+import burp.ui.component.PlaceholderTextField;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;

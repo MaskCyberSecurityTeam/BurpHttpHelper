@@ -1,6 +1,8 @@
-package burp.ui;
+package burp;
 
-import burp.IBurpExtenderCallbacks;
+import burp.ui.main.MainPanel;
+import burp.ui.droppacket.DropPacketPanel;
+import burp.ui.useragent.UserAgentPanel;
 import lombok.Data;
 
 import javax.swing.*;
