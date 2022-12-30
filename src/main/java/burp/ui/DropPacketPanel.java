@@ -50,7 +50,7 @@ public class DropPacketPanel extends JPanel {
 
     public boolean filterUrlOnData(URL url) {
         String targetUrl = url.toExternalForm();
-        long count = table.getDropPacketData().stream().filter(i -> targetUrl.contains(i.getUrl())).count();
+        long count = table.getTableData().stream().filter(i -> targetUrl.contains(i.getUrl())).count();
         return count > 0;
     }
 

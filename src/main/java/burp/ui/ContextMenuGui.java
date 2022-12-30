@@ -33,7 +33,7 @@ public class ContextMenuGui implements IContextMenuFactory {
                 IRequestInfo iRequestInfo = iBurpExtenderCallbacks.getHelpers().analyzeRequest(iReqResp.getHttpService(), iReqResp.getRequest());
                 URL url = iRequestInfo.getUrl();
                 String URIPath = URLUtil.getURIPath(url.toExternalForm());
-                Drop drop = Drop.builder().id(gui.getDropPacketPanel().getTable().getDropPacketData().size()).url(URIPath).comment("").build();
+                Drop drop = Drop.builder().id(gui.getDropPacketPanel().getTable().getDataSize()).url(URIPath).comment("").build();
                 gui.getDropPacketPanel().getTable().addRow(drop);
             }
         });

@@ -157,7 +157,7 @@ public class MainPanel extends JPanel {
 
         saveButton.addActionListener(e -> {
             HashMap<String, Object> config = new HashMap<>();
-            config.put(ConfigKey.RULE_TABLE_KEY, table.getRuleData());
+            config.put(ConfigKey.RULE_TABLE_KEY, table.getTableData());
             config.put(ConfigKey.COMPARER_TOOL_KEY, comparerToolCheckBox.isSelected());
             config.put(ConfigKey.DECODER_TOOL_KEY, decoderToolCheckBox.isSelected());
             config.put(ConfigKey.EXTENDER_TOOL_KEY, extenderToolCheckBox.isSelected());
