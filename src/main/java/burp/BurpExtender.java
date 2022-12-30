@@ -2,6 +2,7 @@ package burp;
 
 import burp.constant.ProjectInfo;
 import burp.listener.IHttpListenerImpl;
+import burp.ui.ContextMenuGui;
 import burp.ui.Gui;
 
 import javax.swing.*;
@@ -23,7 +24,9 @@ public class BurpExtender implements IBurpExtender, ITab {
         iBurpExtenderCallbacks.printOutput(ProjectInfo.VERSION_BANNER);
         iBurpExtenderCallbacks.printOutput(ProjectInfo.GITHUB);
 
+        iBurpExtenderCallbacks.registerContextMenuFactory(new ContextMenuGui(iBurpExtenderCallbacks, gui));
         iBurpExtenderCallbacks.registerHttpListener(new IHttpListenerImpl(iBurpExtenderCallbacks, gui));
+
         SwingUtilities.invokeLater(() -> iBurpExtenderCallbacks.addSuiteTab(BurpExtender.this));
     }
 

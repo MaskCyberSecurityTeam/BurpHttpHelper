@@ -24,19 +24,28 @@ public class IHttpListenerImpl implements IHttpListener {
 
     @Override
     public void processHttpMessage(int msgType, boolean messageIsRequest, IHttpRequestResponse iHttpRequestResponse) {
-        if (messageIsRequest && gui.getMainPanel().validListenerEnabled(msgType)) {
+        if (messageIsRequest) {
             byte[] requestByte = iHttpRequestResponse.getRequest();
             IRequestInfo iRequestInfo = helpers.analyzeRequest(iHttpRequestResponse.getHttpService(), requestByte);
-            byte[] body = Arrays.copyOfRange(requestByte, iRequestInfo.getBodyOffset(), requestByte.length);
-            List<String> headers = iRequestInfo.getHeaders();
 
-            if (gui.getMainPanel().getRandomUserAgentCheckBox().isSelected()) {
-                UserAgentCore.assembly(headers, gui);
+            boolean flag = gui.getDropPacketPanel().filterUrlOnData(iRequestInfo.getUrl());
+            if (flag && msgType != IBurpExtenderCallbacks.TOOL_REPEATER) {
+                iHttpRequestResponse.setRequest(new byte[0]);
+                return;
             }
-            RuleCore.assembly(headers, iRequestInfo.getUrl());
 
-            byte[] newReq = helpers.buildHttpMessage(headers, body);
-            iHttpRequestResponse.setRequest(newReq);
+            if (gui.getMainPanel().validListenerEnabled(msgType)) {
+                byte[] body = Arrays.copyOfRange(requestByte, iRequestInfo.getBodyOffset(), requestByte.length);
+                List<String> headers = iRequestInfo.getHeaders();
+
+                if (gui.getMainPanel().getRandomUserAgentCheckBox().isSelected()) {
+                    UserAgentCore.assembly(headers, gui);
+                }
+                RuleCore.assembly(headers, iRequestInfo.getUrl());
+
+                byte[] newReq = helpers.buildHttpMessage(headers, body);
+                iHttpRequestResponse.setRequest(newReq);
+            }
         } else if (gui.getMainPanel().getRepeaterResponseAutoDecodeCheckBox().isSelected() && msgType == IBurpExtenderCallbacks.TOOL_REPEATER) {
             byte[] responseByte = iHttpRequestResponse.getResponse();
             IResponseInfo iResponseInfo = helpers.analyzeResponse(responseByte);
