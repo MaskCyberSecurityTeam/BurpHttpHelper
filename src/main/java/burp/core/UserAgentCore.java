@@ -2,7 +2,6 @@ package burp.core;
 
 import burp.Gui;
 
-import java.io.*;
 import java.util.*;
 
 public class UserAgentCore {
@@ -51,27 +50,5 @@ public class UserAgentCore {
         }
         int i = (int) (Math.random() * mobileUserAgent.size());
         return mobileUserAgent.get(i);
-    }
-
-    public static void loadDefaultData() {
-        InputStream pcInputStream = UserAgentCore.class.getClassLoader().getResourceAsStream("useragent-pc.txt");
-        try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(pcInputStream))) {
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                pcUserAgent.add(line);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        InputStream mobileInputStream = UserAgentCore.class.getClassLoader().getResourceAsStream("useragent-mobile.txt");
-        try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(mobileInputStream))) {
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                mobileUserAgent.add(line);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }

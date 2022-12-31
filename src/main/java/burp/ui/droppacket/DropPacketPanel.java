@@ -1,23 +1,24 @@
 package burp.ui.droppacket;
 
+import burp.IBurpExtenderCallbacks;
+import burp.ui.component.BurpPanel;
+import cn.hutool.json.JSONObject;
+
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.net.URL;
 
-public class DropPacketPanel extends JPanel {
+public class DropPacketPanel extends BurpPanel {
 
     private JPanel configPanel;
 
     private DropPacketTable table;
 
-    private JButton saveButton;
-
     private JButton removeButton;
 
-    public DropPacketPanel() {
-        initComponent();
-        initEvent();
+    public DropPacketPanel(IBurpExtenderCallbacks iBurpExtenderCallbacks) {
+        super(iBurpExtenderCallbacks);
 
         setLayout(new BorderLayout());
         add(configPanel, BorderLayout.NORTH);
@@ -26,18 +27,15 @@ public class DropPacketPanel extends JPanel {
         setBorder(new TitledBorder("规则管理(RuleManager)"));
     }
 
-    private void initComponent() {
+    public void initComponent() {
         this.configPanel = new JPanel();
         this.table = new DropPacketTable();
 
-        this.saveButton = new JButton("保存(Save)");
         this.removeButton = new JButton("删除(Remove)");
-
         this.configPanel.add(this.removeButton);
-        this.configPanel.add(this.saveButton);
     }
 
-    private void initEvent() {
+    public void initEvent() {
         removeButton.addActionListener(e -> {
             int index = table.getSelectedRow();
             if (index != -1) {
@@ -46,6 +44,16 @@ public class DropPacketPanel extends JPanel {
                 JOptionPane.showMessageDialog(this, "请选择需要删除的数据(Please select row)!");
             }
         });
+    }
+
+    @Override
+    public void initConfig(JSONObject rootJSONObject) {
+
+    }
+
+    @Override
+    public String rootJSONObjectKey() {
+        return null;
     }
 
     public boolean filterUrlOnData(URL url) {

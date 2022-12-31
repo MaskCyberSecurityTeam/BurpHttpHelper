@@ -1,5 +1,10 @@
 package burp.constant;
 
+/**
+ * 配置项常量
+ *
+ * @author RichardTang
+ */
 public class ConfigKey {
     public static final String RULE_TABLE_KEY     = "RuleTableKey";
     public static final String COMPARER_TOOL_KEY  = "ComparerToolKey";
@@ -20,4 +25,6 @@ public class ConfigKey {
     public static final String MOBILE_UA_KEY      = "PCMobileAgentKey";
     public static final String PC_UA_LIST_KEY     = "PCUserAgentListKey";
     public static final String MOBILE_UA_LIST_KEY = "MobileUserAgentListKey";
+
+    public static final String CONFIG_FILE_NAME = "config.json";
 }

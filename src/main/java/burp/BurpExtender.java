@@ -7,9 +7,12 @@ import burp.ui.ContextMenuGui;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Burpsuite插件主入口
+ *
+ * @author RichardTang
+ */
 public class BurpExtender implements IBurpExtender, ITab {
-
-    public static final String TAB_TITLE = "BurpHeaderHelper";
 
     private Gui gui;
 
@@ -31,7 +34,7 @@ public class BurpExtender implements IBurpExtender, ITab {
 
     @Override
     public String getTabCaption() {
-        return TAB_TITLE;
+        return ProjectInfo.TAB_TITLE;
     }
 
     @Override

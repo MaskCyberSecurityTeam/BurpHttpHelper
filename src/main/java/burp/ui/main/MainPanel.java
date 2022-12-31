@@ -5,6 +5,7 @@ import burp.bean.Rule;
 import burp.constant.ConfigKey;
 import burp.constant.RuleActionOption;
 import burp.constant.WindowSize;
+import burp.ui.component.BurpPanel;
 import burp.ui.component.PlaceholderTextField;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
@@ -15,14 +16,10 @@ import net.miginfocom.swing.MigLayout;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
-import java.io.File;
-import java.io.FileWriter;
-import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
 import java.util.Vector;
 
 @Data
-public class MainPanel extends JPanel {
+public class MainPanel extends BurpPanel {
 
     private JPanel otherPanel;
     private JPanel toolPanel;
@@ -49,30 +46,17 @@ public class MainPanel extends JPanel {
     private JCheckBox targetToolCheckBox;
     private JPanel    listenerConfigPanel;
 
-    private String configFilePath;
-
-    private IBurpExtenderCallbacks iBurpExtenderCallbacks;
-
     public static final RuleTable table = new RuleTable();
 
-    public static final String CONFIG_FILE_NAME = "config2.json";
-
     public MainPanel(final IBurpExtenderCallbacks iBurpExtenderCallbacks) {
-        this.iBurpExtenderCallbacks = iBurpExtenderCallbacks;
-        String pluginJarFilePath = iBurpExtenderCallbacks.getExtensionFilename();
-        this.configFilePath = pluginJarFilePath.substring(0, pluginJarFilePath.lastIndexOf(File.separator)) + File.separator + CONFIG_FILE_NAME;
-
-        initComponent();
-        initEvent();
-
-        loadConfig();
+        super(iBurpExtenderCallbacks);
 
         setLayout(new BorderLayout());
         add(configPanel, BorderLayout.NORTH);
         add(rulePanel, BorderLayout.CENTER);
     }
 
-    private void initComponent() {
+    public void initComponent() {
         randomUserAgentCheckBox = new JCheckBox("随机UA头(Random UA Header)");
         repeaterResponseAutoDecodeCheckBox = new JCheckBox("RepeaterResponse自动解码(Repeater Response Auto Decode)");
         otherPanel = new JPanel();
@@ -131,7 +115,7 @@ public class MainPanel extends JPanel {
         configPanel.add(listenerConfigPanel, BorderLayout.CENTER);
     }
 
-    private void initEvent() {
+    public void initEvent() {
         addButton.addActionListener(e -> SwingUtilities.invokeLater(this::ruleFormWindow));
 
         modifyButton.addActionListener(e -> SwingUtilities.invokeLater(() -> {
@@ -151,6 +135,31 @@ public class MainPanel extends JPanel {
                 JOptionPane.showMessageDialog(this, "请选择需要删除的数据(Please select row)!");
             }
         });
+    }
+
+    @Override
+    public void initConfig(JSONObject rootJSONObject) {
+        JSONArray jsonArray = JSONUtil.parseArray(rootJSONObject.get(ConfigKey.RULE_TABLE_KEY));
+        table.addRows(new Vector<>(jsonArray.toList(Rule.class)));
+
+        randomUserAgentCheckBox.setSelected(rootJSONObject.getBool(ConfigKey.RANDOM_UA_KEY));
+        repeaterResponseAutoDecodeCheckBox.setSelected(rootJSONObject.getBool(ConfigKey.RP_AD_KEY));
+        comparerToolCheckBox.setSelected(rootJSONObject.getBool(ConfigKey.COMPARER_TOOL_KEY));
+        decoderToolCheckBox.setSelected(rootJSONObject.getBool(ConfigKey.DECODER_TOOL_KEY));
+        extenderToolCheckBox.setSelected(rootJSONObject.getBool(ConfigKey.EXTENDER_TOOL_KEY));
+        intruderToolCheckBox.setSelected(rootJSONObject.getBool(ConfigKey.INTRUDER_TOOL_KEY));
+        proxyToolCheckBox.setSelected(rootJSONObject.getBool(ConfigKey.PROXY_TOOL_KEY));
+        repeaterToolCheckBox.setSelected(rootJSONObject.getBool(ConfigKey.REPEATER_TOOL_KEY));
+        scannerToolCheckBox.setSelected(rootJSONObject.getBool(ConfigKey.SCANNER_TOOL_KEY));
+        sequencerToolCheckBox.setSelected(rootJSONObject.getBool(ConfigKey.SEQUENCER_TOOL_KEY));
+        spiderToolCheckBox.setSelected(rootJSONObject.getBool(ConfigKey.SPIDER_TOOL_KEY));
+        suiteToolCheckBox.setSelected(rootJSONObject.getBool(ConfigKey.SUITE_TOOL_KEY));
+        targetToolCheckBox.setSelected(rootJSONObject.getBool(ConfigKey.TARGET_TOOL_KEY));
+    }
+
+    @Override
+    public String rootJSONObjectKey() {
+        return "mainPanelConfig";
     }
 
     private void ruleFormWindow() {
@@ -236,35 +245,5 @@ public class MainPanel extends JPanel {
                 return targetToolCheckBox.isSelected();
         }
         return false;
-    }
-
-    private void loadConfig() {
-        File configFile = new File(configFilePath);
-        if (configFile.exists()) {
-            try {
-                JSONObject jsonObject = JSONUtil.readJSONObject(configFile, StandardCharsets.UTF_8);
-
-                JSONObject mainPanelConfig = jsonObject.getJSONObject("mainPanelConfig");
-                JSONArray jsonArray = JSONUtil.parseArray(mainPanelConfig.get(ConfigKey.RULE_TABLE_KEY));
-                table.addRows(new Vector<>(jsonArray.toList(Rule.class)));
-
-                randomUserAgentCheckBox.setSelected(mainPanelConfig.getBool(ConfigKey.RANDOM_UA_KEY));
-                repeaterResponseAutoDecodeCheckBox.setSelected(mainPanelConfig.getBool(ConfigKey.RP_AD_KEY));
-                comparerToolCheckBox.setSelected(mainPanelConfig.getBool(ConfigKey.COMPARER_TOOL_KEY));
-                decoderToolCheckBox.setSelected(mainPanelConfig.getBool(ConfigKey.DECODER_TOOL_KEY));
-                extenderToolCheckBox.setSelected(mainPanelConfig.getBool(ConfigKey.EXTENDER_TOOL_KEY));
-                intruderToolCheckBox.setSelected(mainPanelConfig.getBool(ConfigKey.INTRUDER_TOOL_KEY));
-                proxyToolCheckBox.setSelected(mainPanelConfig.getBool(ConfigKey.PROXY_TOOL_KEY));
-                repeaterToolCheckBox.setSelected(mainPanelConfig.getBool(ConfigKey.REPEATER_TOOL_KEY));
-                scannerToolCheckBox.setSelected(mainPanelConfig.getBool(ConfigKey.SCANNER_TOOL_KEY));
-                sequencerToolCheckBox.setSelected(mainPanelConfig.getBool(ConfigKey.SEQUENCER_TOOL_KEY));
-                spiderToolCheckBox.setSelected(mainPanelConfig.getBool(ConfigKey.SPIDER_TOOL_KEY));
-                suiteToolCheckBox.setSelected(mainPanelConfig.getBool(ConfigKey.SUITE_TOOL_KEY));
-                targetToolCheckBox.setSelected(mainPanelConfig.getBool(ConfigKey.TARGET_TOOL_KEY));
-            } catch (Exception e) {
-                iBurpExtenderCallbacks.printOutput("配置文件读取失败(Config File Read Fail!)");
-                iBurpExtenderCallbacks.printOutput(e.getMessage());
-            }
-        }
     }
 }

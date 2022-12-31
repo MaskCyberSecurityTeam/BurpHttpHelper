@@ -36,24 +36,22 @@ public class Gui extends JPanel {
 
     private String configFilePath;
 
-    public static final String CONFIG_FILE_NAME = "config2.json";
-
     public Gui(final IBurpExtenderCallbacks iBurpExtenderCallbacks) {
-        setLayout(new OverlayLayout(this));
-
+        // 根据插件的加载路径，获取配置文件需要存放的根目录。
         String pluginJarFilePath = iBurpExtenderCallbacks.getExtensionFilename();
-        this.configFilePath = pluginJarFilePath.substring(0, pluginJarFilePath.lastIndexOf(File.separator)) + File.separator + CONFIG_FILE_NAME;
+        this.configFilePath = pluginJarFilePath.substring(0, pluginJarFilePath.lastIndexOf(File.separator)) + File.separator + ConfigKey.CONFIG_FILE_NAME;
+
+        setLayout(new OverlayLayout(this));
 
         mainPanel = new MainPanel(iBurpExtenderCallbacks);
         userAgentPanel = new UserAgentPanel(iBurpExtenderCallbacks);
-        dropPacketPanel = new DropPacketPanel();
+        dropPacketPanel = new DropPacketPanel(iBurpExtenderCallbacks);
 
         saveConfigLabel.setOpaque(false);
         saveConfigLabel.setAlignmentX(X);
         saveConfigLabel.setAlignmentY(Y);
         saveConfigLabel.setBorder(new CompoundBorder(saveConfigLabel.getBorder(), new EmptyBorder(3, 0, 0, 3)));
         saveConfigLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
-
         saveConfigLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -93,18 +91,18 @@ public class Gui extends JPanel {
         String pcTextAreaText = userAgentPanel.getPcTextArea().getText();
         UserAgentCore.pcUserAgent.clear();
         UserAgentCore.pcUserAgent.addAll(Arrays.asList(pcTextAreaText.split("\n")));
-
         String mobileTextAreaText = userAgentPanel.getMobileTextArea().getText();
         UserAgentCore.mobileUserAgent.clear();
         UserAgentCore.mobileUserAgent.addAll(Arrays.asList(mobileTextAreaText.split("\n")));
-
         config.getUserAgentPanelConfig().put(ConfigKey.PC_UA_KEY, userAgentPanel.getPcCheckBox().isSelected());
         config.getUserAgentPanelConfig().put(ConfigKey.MOBILE_UA_KEY, userAgentPanel.getMobileCheckBox().isSelected());
         config.getUserAgentPanelConfig().put(ConfigKey.PC_UA_LIST_KEY, UserAgentCore.pcUserAgent);
         config.getUserAgentPanelConfig().put(ConfigKey.MOBILE_UA_LIST_KEY, UserAgentCore.mobileUserAgent);
 
+        // 存储配置
         String configJson = JSONUtil.toJsonStr(config);
 
+        // 配置写入文件中
         try (FileWriter fileWriter = new FileWriter(configFilePath)) {
             fileWriter.write(configJson);
             fileWriter.flush();
