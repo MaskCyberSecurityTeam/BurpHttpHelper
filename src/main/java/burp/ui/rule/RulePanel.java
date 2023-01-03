@@ -1,4 +1,4 @@
-package burp.ui.main;
+package burp.ui.rule;
 
 import burp.IBurpExtenderCallbacks;
 import burp.bean.Rule;
@@ -18,8 +18,13 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.util.Vector;
 
+/**
+ * 主面板
+ *
+ * @author RichardTang
+ */
 @Data
-public class MainPanel extends BurpPanel {
+public class RulePanel extends BurpPanel {
 
     private JPanel otherPanel;
     private JPanel toolPanel;
@@ -48,7 +53,7 @@ public class MainPanel extends BurpPanel {
 
     public static final RuleTable table = new RuleTable();
 
-    public MainPanel(final IBurpExtenderCallbacks iBurpExtenderCallbacks) {
+    public RulePanel(final IBurpExtenderCallbacks iBurpExtenderCallbacks) {
         super(iBurpExtenderCallbacks);
 
         setLayout(new BorderLayout());
@@ -162,10 +167,18 @@ public class MainPanel extends BurpPanel {
         return "mainPanelConfig";
     }
 
+    /**
+     * 弹窗，用于添加新规则。
+     */
     private void ruleFormWindow() {
         ruleFormWindow(null);
     }
 
+    /**
+     * 弹窗，用于回显指定的规则。
+     *
+     * @param rule 需要回显的规则
+     */
     private void ruleFormWindow(Rule rule) {
         JFrame formWindow = new JFrame();
         formWindow.setLocationRelativeTo(this);
@@ -179,6 +192,7 @@ public class MainPanel extends BurpPanel {
         actionComboBox.setModel(new DefaultComboBoxModel<>(RuleActionOption.values()));
         JButton submitButton = new JButton("提交(Submit)");
 
+        // Placeholder文本
         urlTextField.setPlaceholder("https://*mask-sec.com");
         headerNameTextField.setPlaceholder("User-Agent");
         headerValueTextField.setPlaceholder("MaskSecAgent");
@@ -194,6 +208,7 @@ public class MainPanel extends BurpPanel {
         panel.add(actionComboBox, "cell 1 3, grow, wrap");
         panel.add(submitButton, "span, grow");
 
+        // 清空窗口上一次的数据
         if (rule != null) {
             urlTextField.setText(rule.getUrl());
             headerNameTextField.setText(rule.getHeaderName());
@@ -201,14 +216,17 @@ public class MainPanel extends BurpPanel {
             actionComboBox.setSelectedItem(rule.getAction());
         }
 
+        // 提交
         submitButton.addActionListener(e -> {
             if (rule != null) {
+                // 更新规则
                 rule.setUrl(urlTextField.getText());
                 rule.setHeaderName(headerNameTextField.getText());
                 rule.setHeaderValue(headerValueTextField.getText());
                 rule.setAction((RuleActionOption) actionComboBox.getSelectedItem());
                 table.updateUI();
             } else {
+                // 添加新规则到表格中
                 Rule newRule = Rule.builder().url(urlTextField.getText()).headerName(headerNameTextField.getText()).headerValue(headerValueTextField.getText()).action((RuleActionOption) actionComboBox.getSelectedItem()).id(table.getRowCount()).build();
                 table.addRow(newRule);
             }
@@ -219,6 +237,12 @@ public class MainPanel extends BurpPanel {
         SwingUtilities.invokeLater(() -> formWindow.setVisible(true));
     }
 
+    /**
+     * 校验是否勾选指定的监听模块
+     *
+     * @param msgType 模块的类型编号
+     * @return true:已勾选 false:未勾选
+     */
     public boolean validListenerEnabled(int msgType) {
         switch (msgType) {
             case IBurpExtenderCallbacks.TOOL_COMPARER:
