@@ -1,6 +1,7 @@
 package burp.core;
 
 import burp.bean.Rule;
+import cn.hutool.core.util.StrUtil;
 
 import java.net.URL;
 import java.util.List;
@@ -26,9 +27,7 @@ public class RuleCore {
         for (Rule rule : activeRuleData) {
 
             // 判断当前url是否匹配上现有的规则
-            boolean flag = Pattern.compile(rule.getUrl().replace(ANY, ANY_REGEXP))
-                    .matcher(url.toExternalForm())
-                    .find();
+            boolean flag = Pattern.compile(rule.getUrl().replace(ANY, ANY_REGEXP)).matcher(url.toExternalForm()).find();
 
             if (!flag) {
                 break;
@@ -71,7 +70,7 @@ public class RuleCore {
     public static void modifyOptionAssembly(final List<String> metaDataHeaders, final String headerName, final String headerValue) {
         int index = 0;
         for (String header : metaDataHeaders) {
-            if (header.contains(headerName)) {
+            if (header.equalsIgnoreCase(headerName)) {
                 metaDataHeaders.set(index, String.format("%s: %s", headerName, headerValue));
                 break;
             }
@@ -86,7 +85,7 @@ public class RuleCore {
      * @param headerName      需要删除的HttpHeader
      */
     public static void removeOptionAssembly(final List<String> metaDataHeaders, final String headerName) {
-        metaDataHeaders.removeIf(header -> header.contains(headerName));
+        metaDataHeaders.removeIf(header -> header.equalsIgnoreCase(headerName));
     }
 
 }

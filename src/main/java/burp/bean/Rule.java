@@ -30,4 +30,9 @@ public class Rule {
 
     // 状态
     private Boolean active;
+
+    public void setHeaderName(String headerName) {
+        // 全部小写方式存储
+        this.headerName = headerName.toLowerCase();
+    }
 }
