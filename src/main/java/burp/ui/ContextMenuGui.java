@@ -2,6 +2,7 @@ package burp.ui;
 
 import burp.*;
 import burp.bean.Drop;
+import burp.constant.ProjectInfo;
 import burp.util.URLUtil;
 
 import javax.swing.*;
@@ -28,6 +29,7 @@ public class ContextMenuGui implements IContextMenuFactory {
     @Override
     public List<JMenuItem> createMenuItems(IContextMenuInvocation invocation) {
         ArrayList<JMenuItem> menuItems = new ArrayList<JMenuItem>();
+        JMenu burpHeaderHelperMenu = new JMenu(ProjectInfo.TAB_TITLE);
         JMenuItem dropPacketMenuItem = new JMenuItem("丢弃该数据包");
         // 当用户点击右键时，将请求的信息发送到丢弃数据包的面板中
         dropPacketMenuItem.addActionListener(e -> {
@@ -37,7 +39,8 @@ public class ContextMenuGui implements IContextMenuFactory {
             Drop drop = Drop.builder().id(gui.getDropPacketPanel().getTable().getDataSize()).url(URIPath).comment("").build();
             gui.getDropPacketPanel().getTable().addRow(drop);
         });
-        menuItems.add(dropPacketMenuItem);
+        burpHeaderHelperMenu.add(dropPacketMenuItem);
+        menuItems.add(burpHeaderHelperMenu);
         return menuItems;
     }
 }
