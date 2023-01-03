@@ -71,9 +71,9 @@ public class Gui extends JPanel {
         // 添加三个面板到主页面
         tabbedPane.setAlignmentX(X);
         tabbedPane.setAlignmentY(Y);
-        tabbedPane.addTab("规则面板", rulePanel);
-        tabbedPane.addTab("UA面板", userAgentPanel);
-        tabbedPane.addTab("丢弃数据包面板", dropPacketPanel);
+        tabbedPane.addTab("规则面板(RulePanel)", rulePanel);
+        tabbedPane.addTab("UA面板(UserAgentPanel)", userAgentPanel);
+        tabbedPane.addTab("丢弃数据包面板(DropPacketPanel)", dropPacketPanel);
 
         add(saveConfigLabel);
         add(tabbedPane);
