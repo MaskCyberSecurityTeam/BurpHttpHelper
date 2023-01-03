@@ -5,10 +5,18 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.util.Vector;
 
+/**
+ * JavaBean方式的表格
+ *
+ * @param <T> JavaBean
+ * @author RichardTangß
+ */
 public abstract class BeanTable<T> extends JTable {
 
+    // 存储表头的集合
     protected Vector<String> columnName;
 
+    // 存储表格数据的集合
     protected final Vector<T> data = new Vector<>();
 
     protected DefaultTableModel model = new DefaultTableModel() {
@@ -62,31 +70,68 @@ public abstract class BeanTable<T> extends JTable {
         getTableHeader().setDefaultRenderer(tableCellRenderer);
     }
 
+    /**
+     * 自定义根据行号列号获取数据的逻辑
+     *
+     * @param rowIndex    行号
+     * @param columnIndex 列号
+     * @return 数据
+     */
     public abstract Object initializeGetValueAt(int rowIndex, int columnIndex);
 
+    /**
+     * 自定义初始化表头
+     *
+     * @return 表头集合
+     */
     public abstract Vector<String> initializeColumnName();
 
-    public void initializeSetValueAt(Object aValue, int row, int column) {
-        T valueAt = (T) getValueAt(row, column);
-        data.setElementAt(valueAt, column);
-        model.fireTableCellUpdated(row, column);
+    /**
+     * 自定义根据行号列号存储数据
+     *
+     * @param aValue      数据
+     * @param rowIndex    行号
+     * @param columnIndex 列号
+     */
+    public void initializeSetValueAt(Object aValue, int rowIndex, int columnIndex) {
+        T valueAt = (T) getValueAt(rowIndex, columnIndex);
+        data.setElementAt(valueAt, columnIndex);
+        model.fireTableCellUpdated(rowIndex, columnIndex);
     }
 
+    /**
+     * 添加一行数据
+     *
+     * @param item 需要添加的JavaBean实例
+     */
     public void addRow(T item) {
         data.add(item);
         updateUI();
     }
 
+    /**
+     * 添加多行数据
+     *
+     * @param items 需要添加的JavaBean实例集合
+     */
     public void addRows(Vector<T> items) {
         data.addAll(items);
         updateUI();
     }
 
+    /**
+     * 根据行号删除数据
+     *
+     * @param rowIndex 行号
+     */
     public void removeRow(int rowIndex) {
         data.remove(rowIndex);
         updateUI();
     }
 
+    /**
+     * 删除全部数据
+     */
     public void removeAll() {
         int dataSize = data.size();
         if (dataSize > 0) {
@@ -95,6 +140,11 @@ public abstract class BeanTable<T> extends JTable {
         }
     }
 
+    /**
+     * 获取选中的行数据
+     *
+     * @return 选中的行数据
+     */
     public T getSelectedItem() {
         int index = getSelectedRow();
         if (index != -1) {
@@ -104,6 +154,9 @@ public abstract class BeanTable<T> extends JTable {
         }
     }
 
+    /**
+     * 删除选中的行数据
+     */
     public void removeSelectedItem() {
         int index = getSelectedRow();
         if (index != -1) {
@@ -112,10 +165,20 @@ public abstract class BeanTable<T> extends JTable {
         }
     }
 
+    /**
+     * 获取存储表格数据的集合
+     *
+     * @return 数据集合
+     */
     public Vector<T> getTableData() {
         return data;
     }
 
+    /**
+     * 获取表格行数量
+     *
+     * @return 表格行数量
+     */
     public int getDataSize() {
         return data.size();
     }
