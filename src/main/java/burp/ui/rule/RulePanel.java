@@ -19,7 +19,7 @@ import java.awt.*;
 import java.util.Vector;
 
 /**
- * 主面板
+ * 规则面板
  *
  * @author RichardTang
  */
