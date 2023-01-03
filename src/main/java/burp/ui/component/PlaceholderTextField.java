@@ -5,7 +5,8 @@ import javax.swing.text.Document;
 import java.awt.*;
 
 /**
- * http://www.uwenku.com/question/p-pyhaxkpo-bez.html
+ * 带有Placeholder效果的TextField - 带有文本提示的输入框<br>
+ * 参考来源: http://www.uwenku.com/question/p-pyhaxkpo-bez.html
  */
 @SuppressWarnings("all")
 public class PlaceholderTextField extends JTextField {

@@ -15,6 +15,11 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.io.*;
 
+/**
+ * UA面板
+ *
+ * @author RichardTang
+ */
 @Data
 public class UserAgentPanel extends BurpPanel {
 
@@ -25,12 +30,15 @@ public class UserAgentPanel extends BurpPanel {
     private JTextArea   mobileTextArea;
     private JTabbedPane userAgentTabbedPane;
 
+    // 默认UA值来源的2个文件
     public static final String DEFAULT_PC_UA_FILE     = "useragent-pc.txt";
     public static final String DEFAULT_MOBILE_UA_FILE = "useragent-mobile.txt";
 
     public UserAgentPanel(final IBurpExtenderCallbacks iBurpExtenderCallbacks) {
         super(iBurpExtenderCallbacks);
 
+        // 从配置文件读取配置完成后，需要将UA值填充回TextArea面板中。
+        // 如果UA的集合中位0，则从默认UA值来源的2个文件中读取数据。
         if (UserAgentCore.pcUserAgent.size() == 0 && "".equals(pcTextArea.getText())) {
             InputStream inputStream = UserAgentCore.class.getClassLoader().getResourceAsStream(DEFAULT_PC_UA_FILE);
             FileUtil.readLines(inputStream, UserAgentCore.pcUserAgent);
@@ -79,9 +87,11 @@ public class UserAgentPanel extends BurpPanel {
         pcCheckBox.setSelected(rootJSONObject.getBool(ConfigKey.PC_UA_KEY));
         mobileCheckBox.setSelected(rootJSONObject.getBool(ConfigKey.MOBILE_UA_KEY));
 
+        // 从配置文件中读取UA值
         JSONArray pcUAJSONArray = JSONUtil.parseArray(rootJSONObject.get(ConfigKey.PC_UA_LIST_KEY));
         JSONArray mobileUAJSONArray = JSONUtil.parseArray(rootJSONObject.get(ConfigKey.MOBILE_UA_LIST_KEY));
 
+        // 将读取的UA值填入集合中
         UserAgentCore.pcUserAgent.addAll(pcUAJSONArray.toList(String.class));
         UserAgentCore.mobileUserAgent.addAll(mobileUAJSONArray.toList(String.class));
     }

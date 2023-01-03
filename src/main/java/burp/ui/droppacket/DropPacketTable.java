@@ -5,6 +5,11 @@ import burp.ui.component.BeanTable;
 
 import java.util.Vector;
 
+/**
+ * 丢弃数据包表格
+ *
+ * @author RichardTang
+ */
 public class DropPacketTable extends BeanTable<Drop> {
 
     DropPacketTable() {

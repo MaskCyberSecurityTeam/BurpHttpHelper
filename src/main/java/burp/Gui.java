@@ -3,7 +3,7 @@ package burp;
 import burp.bean.Config;
 import burp.constant.ConfigKey;
 import burp.core.UserAgentCore;
-import burp.ui.main.MainPanel;
+import burp.ui.rule.RulePanel;
 import burp.ui.droppacket.DropPacketPanel;
 import burp.ui.useragent.UserAgentPanel;
 import burp.util.FileUtil;
@@ -28,8 +28,8 @@ import java.util.Arrays;
 public class Gui extends JPanel {
 
     // 主页面中的三个面板
-    private MainPanel       mainPanel;
-    private UserAgentPanel  userAgentPanel;
+    private RulePanel      rulePanel;
+    private UserAgentPanel userAgentPanel;
     private DropPacketPanel dropPacketPanel;
     private JTabbedPane     tabbedPane = new JTabbedPane();
 
@@ -51,7 +51,7 @@ public class Gui extends JPanel {
         configFilePath = FileUtil.getConfigFilePathByBurpExt(iBurpExtenderCallbacks);
 
         // 三个面板创建
-        mainPanel = new MainPanel(iBurpExtenderCallbacks);
+        rulePanel = new RulePanel(iBurpExtenderCallbacks);
         userAgentPanel = new UserAgentPanel(iBurpExtenderCallbacks);
         dropPacketPanel = new DropPacketPanel(iBurpExtenderCallbacks);
 
@@ -71,7 +71,7 @@ public class Gui extends JPanel {
         // 添加三个面板到主页面
         tabbedPane.setAlignmentX(X);
         tabbedPane.setAlignmentY(Y);
-        tabbedPane.addTab("主面板", mainPanel);
+        tabbedPane.addTab("规则面板", rulePanel);
         tabbedPane.addTab("UA面板", userAgentPanel);
         tabbedPane.addTab("丢弃数据包面板", dropPacketPanel);
 
@@ -81,20 +81,20 @@ public class Gui extends JPanel {
 
     private void saveConfig() {
         // 主面板配置
-        config.getMainPanelConfig().put(ConfigKey.RULE_TABLE_KEY, MainPanel.table.getTableData());
-        config.getMainPanelConfig().put(ConfigKey.COMPARER_TOOL_KEY, mainPanel.getComparerToolCheckBox().isSelected());
-        config.getMainPanelConfig().put(ConfigKey.DECODER_TOOL_KEY, mainPanel.getDecoderToolCheckBox().isSelected());
-        config.getMainPanelConfig().put(ConfigKey.EXTENDER_TOOL_KEY, mainPanel.getExtenderToolCheckBox().isSelected());
-        config.getMainPanelConfig().put(ConfigKey.INTRUDER_TOOL_KEY, mainPanel.getIntruderToolCheckBox().isSelected());
-        config.getMainPanelConfig().put(ConfigKey.PROXY_TOOL_KEY, mainPanel.getProxyToolCheckBox().isSelected());
-        config.getMainPanelConfig().put(ConfigKey.REPEATER_TOOL_KEY, mainPanel.getRepeaterToolCheckBox().isSelected());
-        config.getMainPanelConfig().put(ConfigKey.SCANNER_TOOL_KEY, mainPanel.getScannerToolCheckBox().isSelected());
-        config.getMainPanelConfig().put(ConfigKey.SEQUENCER_TOOL_KEY, mainPanel.getSequencerToolCheckBox().isSelected());
-        config.getMainPanelConfig().put(ConfigKey.SPIDER_TOOL_KEY, mainPanel.getSpiderToolCheckBox().isSelected());
-        config.getMainPanelConfig().put(ConfigKey.SUITE_TOOL_KEY, mainPanel.getSuiteToolCheckBox().isSelected());
-        config.getMainPanelConfig().put(ConfigKey.TARGET_TOOL_KEY, mainPanel.getTargetToolCheckBox().isSelected());
-        config.getMainPanelConfig().put(ConfigKey.RANDOM_UA_KEY, mainPanel.getRandomUserAgentCheckBox().isSelected());
-        config.getMainPanelConfig().put(ConfigKey.RP_AD_KEY, mainPanel.getRepeaterResponseAutoDecodeCheckBox().isSelected());
+        config.getRulePanelConfig().put(ConfigKey.RULE_TABLE_KEY, RulePanel.table.getTableData());
+        config.getRulePanelConfig().put(ConfigKey.COMPARER_TOOL_KEY, rulePanel.getComparerToolCheckBox().isSelected());
+        config.getRulePanelConfig().put(ConfigKey.DECODER_TOOL_KEY, rulePanel.getDecoderToolCheckBox().isSelected());
+        config.getRulePanelConfig().put(ConfigKey.EXTENDER_TOOL_KEY, rulePanel.getExtenderToolCheckBox().isSelected());
+        config.getRulePanelConfig().put(ConfigKey.INTRUDER_TOOL_KEY, rulePanel.getIntruderToolCheckBox().isSelected());
+        config.getRulePanelConfig().put(ConfigKey.PROXY_TOOL_KEY, rulePanel.getProxyToolCheckBox().isSelected());
+        config.getRulePanelConfig().put(ConfigKey.REPEATER_TOOL_KEY, rulePanel.getRepeaterToolCheckBox().isSelected());
+        config.getRulePanelConfig().put(ConfigKey.SCANNER_TOOL_KEY, rulePanel.getScannerToolCheckBox().isSelected());
+        config.getRulePanelConfig().put(ConfigKey.SEQUENCER_TOOL_KEY, rulePanel.getSequencerToolCheckBox().isSelected());
+        config.getRulePanelConfig().put(ConfigKey.SPIDER_TOOL_KEY, rulePanel.getSpiderToolCheckBox().isSelected());
+        config.getRulePanelConfig().put(ConfigKey.SUITE_TOOL_KEY, rulePanel.getSuiteToolCheckBox().isSelected());
+        config.getRulePanelConfig().put(ConfigKey.TARGET_TOOL_KEY, rulePanel.getTargetToolCheckBox().isSelected());
+        config.getRulePanelConfig().put(ConfigKey.RANDOM_UA_KEY, rulePanel.getRandomUserAgentCheckBox().isSelected());
+        config.getRulePanelConfig().put(ConfigKey.RP_AD_KEY, rulePanel.getRepeaterResponseAutoDecodeCheckBox().isSelected());
 
 
         // UA面板配置

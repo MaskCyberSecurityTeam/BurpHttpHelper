@@ -9,6 +9,11 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.net.URL;
 
+/**
+ * 丢弃数据包面板
+ *
+ * @author RichardTang
+ */
 public class DropPacketPanel extends BurpPanel {
 
     private JPanel configPanel;
@@ -56,6 +61,11 @@ public class DropPacketPanel extends BurpPanel {
         return null;
     }
 
+    /**
+     * 根据URL在tableData中搜索是否存在这个URL数据
+     *
+     * @return true:存在 false:不存在
+     */
     public boolean filterUrlOnData(URL url) {
         String targetUrl = url.toExternalForm();
         long count = table.getTableData().stream().filter(i -> targetUrl.contains(i.getUrl())).count();

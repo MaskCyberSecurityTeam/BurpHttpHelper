@@ -1,4 +1,4 @@
-package burp.ui.main;
+package burp.ui.rule;
 
 import burp.bean.Rule;
 import burp.core.RuleCore;
@@ -6,6 +6,11 @@ import burp.ui.component.BeanTable;
 
 import java.util.Vector;
 
+/**
+ * 规则表格
+ *
+ * @author RichardTang
+ */
 public class RuleTable extends BeanTable<Rule> {
 
     RuleTable() {

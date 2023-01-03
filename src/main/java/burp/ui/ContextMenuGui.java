@@ -9,6 +9,11 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Burp中邮件的菜单选项
+ *
+ * @author RichardTang
+ */
 public class ContextMenuGui implements IContextMenuFactory {
 
     private Gui gui;
@@ -24,11 +29,11 @@ public class ContextMenuGui implements IContextMenuFactory {
     public List<JMenuItem> createMenuItems(IContextMenuInvocation invocation) {
         ArrayList<JMenuItem> menuItems = new ArrayList<JMenuItem>();
         JMenuItem dropPacketMenuItem = new JMenuItem("丢弃该数据包");
+        // 当用户点击右键时，将请求的信息发送到丢弃数据包的面板中
         dropPacketMenuItem.addActionListener(e -> {
             IHttpRequestResponse iReqResp = invocation.getSelectedMessages()[0];
             IRequestInfo iRequestInfo = iBurpExtenderCallbacks.getHelpers().analyzeRequest(iReqResp.getHttpService(), iReqResp.getRequest());
-            URL url = iRequestInfo.getUrl();
-            String URIPath = URLUtil.getURIPath(url.toExternalForm());
+            String URIPath = URLUtil.getURIPath(iRequestInfo.getUrl().toExternalForm());
             Drop drop = Drop.builder().id(gui.getDropPacketPanel().getTable().getDataSize()).url(URIPath).comment("").build();
             gui.getDropPacketPanel().getTable().addRow(drop);
         });
