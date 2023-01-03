@@ -2,6 +2,7 @@ package burp.ui.component;
 
 import burp.IBurpExtenderCallbacks;
 import burp.constant.ConfigKey;
+import burp.util.FileUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 
@@ -30,10 +31,7 @@ public abstract class BurpPanel extends JPanel {
 
     public BurpPanel(final IBurpExtenderCallbacks iBurpExtenderCallbacks) {
         this.iBurpExtenderCallbacks = iBurpExtenderCallbacks;
-
-        // 根据Jar包加载的位置获取配置文件的绝对路径
-        String pluginJarFilePath = iBurpExtenderCallbacks.getExtensionFilename();
-        this.configFilePath = pluginJarFilePath.substring(0, pluginJarFilePath.lastIndexOf(File.separator)) + File.separator + ConfigKey.CONFIG_FILE_NAME;
+        this.configFilePath = FileUtil.getConfigFilePathByBurpExt(iBurpExtenderCallbacks);
 
         // 初始化动作
         initComponent();
