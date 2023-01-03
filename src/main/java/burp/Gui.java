@@ -6,6 +6,7 @@ import burp.core.UserAgentCore;
 import burp.ui.main.MainPanel;
 import burp.ui.droppacket.DropPacketPanel;
 import burp.ui.useragent.UserAgentPanel;
+import burp.util.FileUtil;
 import cn.hutool.json.JSONUtil;
 import lombok.Data;
 
@@ -15,38 +16,46 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
 import java.io.FileWriter;
 import java.util.Arrays;
 
+/**
+ * 插件主页面
+ *
+ * @author RichardTang
+ */
 @Data
 public class Gui extends JPanel {
 
+    // 主页面中的三个面板
     private MainPanel       mainPanel;
     private UserAgentPanel  userAgentPanel;
     private DropPacketPanel dropPacketPanel;
     private JTabbedPane     tabbedPane = new JTabbedPane();
 
+    // 主页面处右上角的保存
     private JLabel saveConfigLabel = new JLabel("保存配置(SaveConfig)");
 
     private static final float X = 1.0f;
     private static final float Y = 0.0f;
 
+    // 配置类
     private final Config config = new Config();
 
+    // 配置文件路径
     private String configFilePath;
 
     public Gui(final IBurpExtenderCallbacks iBurpExtenderCallbacks) {
-        // 根据插件的加载路径，获取配置文件需要存放的根目录。
-        String pluginJarFilePath = iBurpExtenderCallbacks.getExtensionFilename();
-        this.configFilePath = pluginJarFilePath.substring(0, pluginJarFilePath.lastIndexOf(File.separator)) + File.separator + ConfigKey.CONFIG_FILE_NAME;
-
         setLayout(new OverlayLayout(this));
 
+        configFilePath = FileUtil.getConfigFilePathByBurpExt(iBurpExtenderCallbacks);
+
+        // 三个面板创建
         mainPanel = new MainPanel(iBurpExtenderCallbacks);
         userAgentPanel = new UserAgentPanel(iBurpExtenderCallbacks);
         dropPacketPanel = new DropPacketPanel(iBurpExtenderCallbacks);
 
+        // 设置保存按钮的位置
         saveConfigLabel.setOpaque(false);
         saveConfigLabel.setAlignmentX(X);
         saveConfigLabel.setAlignmentY(Y);
@@ -59,6 +68,7 @@ public class Gui extends JPanel {
             }
         });
 
+        // 添加三个面板到主页面
         tabbedPane.setAlignmentX(X);
         tabbedPane.setAlignmentY(Y);
         tabbedPane.addTab("主面板", mainPanel);
