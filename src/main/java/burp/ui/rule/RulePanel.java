@@ -165,7 +165,7 @@ public class RulePanel extends BurpPanel {
 
     @Override
     public String rootJSONObjectKey() {
-        return "mainPanelConfig";
+        return "rulePanelConfig";
     }
 
     /**
