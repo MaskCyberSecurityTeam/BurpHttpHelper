@@ -48,3 +48,4 @@ Ps: **保存后会在插件当前目录下生成config.json文件，不要随意
 * ~~RepeaterResponse自动解码unicode、url编码、html编码~~ß
 * ~~默认配置(常见信息泄露头)~~
 * ~~丢弃特定请求~~
+* 重写README说明
