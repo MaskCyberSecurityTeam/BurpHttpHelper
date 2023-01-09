@@ -28,8 +28,8 @@ import java.util.Arrays;
 public class Gui extends JPanel {
 
     // 主页面中的三个面板
-    private RulePanel      rulePanel;
-    private UserAgentPanel userAgentPanel;
+    private RulePanel       rulePanel;
+    private UserAgentPanel  userAgentPanel;
     private DropPacketPanel dropPacketPanel;
     private JTabbedPane     tabbedPane = new JTabbedPane();
 
@@ -121,4 +121,5 @@ public class Gui extends JPanel {
             JOptionPane.showMessageDialog(this, "配置文件保存失败(Config File Save Fail!)", "提示(Tip)", JOptionPane.WARNING_MESSAGE);
         }
     }
+    
 }

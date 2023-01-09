@@ -26,12 +26,14 @@ public class RuleTable extends BeanTable<Rule> {
             case 1:
                 return item.getUrl();
             case 2:
-                return item.getHeaderName();
+                return item.getKeyName();
             case 3:
-                return item.getHeaderValue();
+                return item.getKeyValue();
             case 4:
-                return item.getAction();
+                return item.getType();
             case 5:
+                return item.getAction();
+            case 6:
                 return item.getActive();
         }
         return null;
@@ -42,8 +44,9 @@ public class RuleTable extends BeanTable<Rule> {
         final Vector<String> columnName = new Vector<>();
         columnName.addElement("编号(ID)");
         columnName.addElement("地址(URL)");
-        columnName.addElement("协议头(HeaderName)");
-        columnName.addElement("协议值(HeaderValue)");
+        columnName.addElement("键名(KeyName)");
+        columnName.addElement("键值(KeyValue)");
+        columnName.addElement("类型(Type)");
         columnName.addElement("动作(Action)");
         columnName.addElement("状态(State)");
         return columnName;
@@ -51,7 +54,8 @@ public class RuleTable extends BeanTable<Rule> {
 
     @Override
     public void initializeSetValueAt(Object aValue, int row, int column) {
-        if (column == 5) {
+        // 最后一个column，在当前项目中是固定的组件为CheckBox，需要特殊处理。
+        if (column == 6) {
             Boolean isActive = (Boolean) aValue;
             Rule rule = data.get(row);
             rule.setActive(isActive);

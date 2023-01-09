@@ -52,6 +52,7 @@ public class IHttpListenerImpl implements IHttpListener {
                 if (gui.getRulePanel().getRandomUserAgentCheckBox().isSelected()) {
                     UserAgentCore.assembly(headers, gui);
                 }
+
                 // 处理Header规则
                 RuleCore.assembly(headers, iRequestInfo.getUrl());
 

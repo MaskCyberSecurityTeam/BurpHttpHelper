@@ -9,7 +9,7 @@ import java.util.Vector;
  * JavaBean方式的表格
  *
  * @param <T> JavaBean
- * @author RichardTangß
+ * @author RichardTang
  */
 public abstract class BeanTable<T> extends JTable {
 
@@ -48,7 +48,8 @@ public abstract class BeanTable<T> extends JTable {
 
         @Override
         public Class<?> getColumnClass(int columnIndex) {
-            if (columnIndex == 5) {
+            // 最后一个column，在当前项目中是固定的组件为CheckBox，所以需要返回为Boolean.class。
+            if (columnIndex == 6) {
                 return Boolean.class;
             } else {
                 return super.getColumnClass(columnIndex);

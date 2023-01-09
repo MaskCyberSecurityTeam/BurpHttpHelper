@@ -40,7 +40,7 @@ public class UserAgentCore {
 
         // 以上都没有勾选，那么就不进行修改，userAgent有值就代表修改了。
         if (userAgent != null) {
-            RuleCore.modifyOptionAssembly(headers, "User-Agent", userAgent);
+            RuleCore.modifyHttpHeaderOptionAssembly(headers, "User-Agent", userAgent);
         }
     }
 

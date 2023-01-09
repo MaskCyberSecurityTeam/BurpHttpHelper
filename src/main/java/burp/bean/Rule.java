@@ -1,6 +1,7 @@
 package burp.bean;
 
 import burp.constant.RuleActionOption;
+import burp.constant.RuleTypeOption;
 import lombok.Builder;
 import lombok.Data;
 
@@ -19,11 +20,14 @@ public class Rule {
     // 地址
     private String url;
 
-    // 协议头
-    private String headerName;
+    // 键名
+    private String keyName;
 
-    // 协议值
-    private String headerValue;
+    // 键值
+    private String keyValue;
+
+    // 类型
+    private RuleTypeOption type;
 
     // 动作
     private RuleActionOption action;
@@ -31,8 +35,8 @@ public class Rule {
     // 状态
     private Boolean active;
 
-    public void setHeaderName(String headerName) {
+    public void setKeyName(String keyName) {
         // 全部小写方式存储
-        this.headerName = headerName.toLowerCase();
+        this.keyName = keyName.toLowerCase();
     }
 }

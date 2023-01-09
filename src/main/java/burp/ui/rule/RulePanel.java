@@ -4,6 +4,7 @@ import burp.IBurpExtenderCallbacks;
 import burp.bean.Rule;
 import burp.constant.ConfigKey;
 import burp.constant.RuleActionOption;
+import burp.constant.RuleTypeOption;
 import burp.constant.WindowSize;
 import burp.ui.component.BurpPanel;
 import burp.ui.component.PlaceholderTextField;
@@ -186,33 +187,38 @@ public class RulePanel extends BurpPanel {
         formWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         PlaceholderTextField urlTextField = new PlaceholderTextField();
-        PlaceholderTextField headerNameTextField = new PlaceholderTextField();
-        PlaceholderTextField headerValueTextField = new PlaceholderTextField();
+        PlaceholderTextField keyNameTextField = new PlaceholderTextField();
+        PlaceholderTextField keyValueTextField = new PlaceholderTextField();
+        JComboBox<RuleTypeOption> typeComboBox = new JComboBox<>();
+        typeComboBox.setModel(new DefaultComboBoxModel<>(RuleTypeOption.values()));
         JComboBox<RuleActionOption> actionComboBox = new JComboBox<>();
         actionComboBox.setModel(new DefaultComboBoxModel<>(RuleActionOption.values()));
         JButton submitButton = new JButton("提交(Submit)");
 
         // Placeholder文本
         urlTextField.setPlaceholder("https://*mask-sec.com");
-        headerNameTextField.setPlaceholder("User-Agent");
-        headerValueTextField.setPlaceholder("MaskSecAgent");
+        keyNameTextField.setPlaceholder("User-Agent");
+        keyValueTextField.setPlaceholder("MaskSecAgent");
 
         JPanel panel = new JPanel(new MigLayout("", "[][grow]"));
         panel.add(new JLabel("地址(URL): "), "cell 0 0");
         panel.add(urlTextField, "cell 1 0, grow");
-        panel.add(new JLabel("协议头(HeaderName): "), "cell 0 1");
-        panel.add(headerNameTextField, "cell 1 1, grow");
-        panel.add(new JLabel("协议值(HeaderValue): "), "cell 0 2");
-        panel.add(headerValueTextField, "cell 1 2, grow");
-        panel.add(new JLabel("动作(Action): "), "cell 0 3");
-        panel.add(actionComboBox, "cell 1 3, grow, wrap");
+        panel.add(new JLabel("键名(KeyName): "), "cell 0 1");
+        panel.add(keyNameTextField, "cell 1 1, grow");
+        panel.add(new JLabel("键值(KeyValue): "), "cell 0 2");
+        panel.add(keyValueTextField, "cell 1 2, grow");
+        panel.add(new JLabel("类型(Type): "), "cell 0 3");
+        panel.add(typeComboBox, "cell 1 3, grow, wrap");
+        panel.add(new JLabel("动作(Action): "), "cell 0 4");
+        panel.add(actionComboBox, "cell 1 4, grow, wrap");
         panel.add(submitButton, "span, grow");
 
         // 清空窗口上一次的数据
         if (rule != null) {
             urlTextField.setText(rule.getUrl());
-            headerNameTextField.setText(rule.getHeaderName());
-            headerValueTextField.setText(rule.getHeaderValue());
+            keyNameTextField.setText(rule.getKeyName());
+            keyValueTextField.setText(rule.getKeyValue());
+            typeComboBox.setSelectedItem(rule.getType());
             actionComboBox.setSelectedItem(rule.getAction());
         }
 
@@ -221,13 +227,21 @@ public class RulePanel extends BurpPanel {
             if (rule != null) {
                 // 更新规则
                 rule.setUrl(urlTextField.getText());
-                rule.setHeaderName(headerNameTextField.getText());
-                rule.setHeaderValue(headerValueTextField.getText());
+                rule.setKeyName(keyNameTextField.getText());
+                rule.setKeyValue(keyValueTextField.getText());
+                rule.setType((RuleTypeOption) typeComboBox.getSelectedItem());
                 rule.setAction((RuleActionOption) actionComboBox.getSelectedItem());
                 table.updateUI();
             } else {
                 // 添加新规则到表格中
-                Rule newRule = Rule.builder().url(urlTextField.getText()).headerName(headerNameTextField.getText()).headerValue(headerValueTextField.getText()).action((RuleActionOption) actionComboBox.getSelectedItem()).id(table.getRowCount()).build();
+                Rule newRule = Rule.builder()
+                        .url(urlTextField.getText())
+                        .keyName(keyNameTextField.getText())
+                        .keyValue(keyValueTextField.getText())
+                        .type((RuleTypeOption) typeComboBox.getSelectedItem())
+                        .action((RuleActionOption) actionComboBox.getSelectedItem())
+                        .id(table.getRowCount())
+                        .build();
                 table.addRow(newRule);
             }
             formWindow.dispose();
