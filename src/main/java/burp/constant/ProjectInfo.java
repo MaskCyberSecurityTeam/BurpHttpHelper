@@ -25,12 +25,12 @@ public class ProjectInfo {
     }
 
     // Burpsuite上的Tab页显示的标题
-    public static final String TAB_TITLE = "BurpHeaderHelper";
+    public static final String TAB_TITLE = "BurpHttpHelper";
 
     // 信息
-    public static final String EXT_NAME       = String.format("BurpHeaderHelper - %s - Http Protocol Helper", VERSION);
+    public static final String EXT_NAME       = String.format("BurpHttpHelper - %s - Http Protocol Helper", VERSION);
     public static final String VERSION_BANNER = String.format("Version: %s", VERSION);
     public static final String TEAM           = "Team: MaskSec";
     public static final String AUTHOR         = "Author: RichardTang";
-    public static final String GITHUB         = "GitHub: https://github.com/MaskCyberSecurityTeam/BurpHeaderHelper";
+    public static final String GITHUB         = "GitHub: https://github.com/MaskCyberSecurityTeam/BurpHttpHelper";
 }

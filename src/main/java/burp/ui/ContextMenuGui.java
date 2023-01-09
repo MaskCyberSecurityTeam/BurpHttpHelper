@@ -29,7 +29,7 @@ public class ContextMenuGui implements IContextMenuFactory {
     @Override
     public List<JMenuItem> createMenuItems(IContextMenuInvocation invocation) {
         ArrayList<JMenuItem> menuItems = new ArrayList<JMenuItem>();
-        JMenu burpHeaderHelperMenu = new JMenu(ProjectInfo.TAB_TITLE);
+        JMenu burpHttpHelperMenu = new JMenu(ProjectInfo.TAB_TITLE);
         JMenuItem dropPacketMenuItem = new JMenuItem("丢弃该数据包");
         // 当用户点击右键时，将请求的信息发送到丢弃数据包的面板中
         dropPacketMenuItem.addActionListener(e -> {
@@ -39,8 +39,8 @@ public class ContextMenuGui implements IContextMenuFactory {
             Drop drop = Drop.builder().id(gui.getDropPacketPanel().getTable().getDataSize()).url(URIPath).comment("").build();
             gui.getDropPacketPanel().getTable().addRow(drop);
         });
-        burpHeaderHelperMenu.add(dropPacketMenuItem);
-        menuItems.add(burpHeaderHelperMenu);
+        burpHttpHelperMenu.add(dropPacketMenuItem);
+        menuItems.add(burpHttpHelperMenu);
         return menuItems;
     }
 }
