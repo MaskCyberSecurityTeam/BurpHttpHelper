@@ -48,12 +48,12 @@ public class UserAgentPanel extends BurpPanel {
             FileUtil.readLines(inputStream, UserAgentCore.mobileUserAgent);
         }
         for (String line : UserAgentCore.pcUserAgent) {
-            pcTextArea.append(line);
-            pcTextArea.append("\r\n");
+            pcTextArea.append(line.trim());
+            pcTextArea.append("\n");
         }
         for (String line : UserAgentCore.mobileUserAgent) {
-            mobileTextArea.append(line);
-            mobileTextArea.append("\r\n");
+            mobileTextArea.append(line.trim());
+            mobileTextArea.append("\n");
         }
     }
 
