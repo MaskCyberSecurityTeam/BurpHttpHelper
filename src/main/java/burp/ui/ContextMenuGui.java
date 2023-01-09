@@ -30,7 +30,7 @@ public class ContextMenuGui implements IContextMenuFactory {
     public List<JMenuItem> createMenuItems(IContextMenuInvocation invocation) {
         ArrayList<JMenuItem> menuItems = new ArrayList<JMenuItem>();
         JMenu burpHttpHelperMenu = new JMenu(ProjectInfo.TAB_TITLE);
-        JMenuItem dropPacketMenuItem = new JMenuItem("丢弃该数据包");
+        JMenuItem dropPacketMenuItem = new JMenuItem("丢弃该数据包(DropThePacket)");
         // 当用户点击右键时，将请求的信息发送到丢弃数据包的面板中
         dropPacketMenuItem.addActionListener(e -> {
             IHttpRequestResponse iReqResp = invocation.getSelectedMessages()[0];
