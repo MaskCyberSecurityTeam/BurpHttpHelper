@@ -16,7 +16,7 @@
 * ~~HttpCookie增删改~~
 * HttpBody增删改
 * ~~随机UserAgent~~
-* ~~RepeaterResponse自动解码unicode、url编码、html编码~~ß
+* ~~RepeaterResponse自动解码unicode、url编码、html编码~~
 * ~~默认配置(常见信息泄露头)~~
 * ~~丢弃特定请求~~
 * ~~重写README说明~~
