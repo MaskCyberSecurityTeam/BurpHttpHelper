@@ -104,6 +104,7 @@ public class RuleCore {
      * @return 处理过后的cookie字符串
      */
     public static String removeHttpCookieOptionAssembly(Rule rule, String cookies) {
+        // TODO cookie必须是标准的 SESSION=123; 如果缺少;号，则匹配不上。
         return Pattern.compile(rule.getKeyName() + "=(.+?;)").matcher(cookies).replaceAll("");
     }
 
