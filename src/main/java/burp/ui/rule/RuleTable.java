@@ -60,9 +60,9 @@ public class RuleTable extends BeanTable<Rule> {
             Rule rule = data.get(row);
             rule.setActive(isActive);
             if (isActive) {
-                RuleCore.activeRuleData.add(row, rule);
+                RuleCore.activeRuleData.addElement(rule);
             } else {
-                RuleCore.activeRuleData.remove(row);
+                RuleCore.activeRuleData.removeElement(rule);
             }
         }
     }

@@ -150,7 +150,7 @@ public class RuleCore {
     public static void modifyHttpHeaderOptionAssembly(final List<String> metaDataHeaders, final String headerName, final String headerValue) {
         int index = 0;
         for (String header : metaDataHeaders) {
-            if (header.equalsIgnoreCase(headerName)) {
+            if (header.toLowerCase().contains(headerName)) {
                 metaDataHeaders.set(index, String.format("%s: %s", headerName, headerValue));
                 break;
             }
