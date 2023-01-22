@@ -57,6 +57,7 @@ public class IHttpListenerImpl implements IHttpListener {
                 // 处理Http协议规则
                 String newBody = RuleCore.assembly(headers, iRequestInfo.getUrl(), body);
                 if(newBody != null) {
+                    // 处理HttpBody
                     body = newBody.getBytes();
                 }
 

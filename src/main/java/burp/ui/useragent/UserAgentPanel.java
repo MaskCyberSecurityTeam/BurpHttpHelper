@@ -47,6 +47,7 @@ public class UserAgentPanel extends BurpPanel {
             InputStream inputStream = UserAgentCore.class.getClassLoader().getResourceAsStream(DEFAULT_MOBILE_UA_FILE);
             FileUtil.readLines(inputStream, UserAgentCore.mobileUserAgent);
         }
+        // 将内容添加至UserAgent的TextArea中
         for (String line : UserAgentCore.pcUserAgent) {
             pcTextArea.append(line.trim());
             pcTextArea.append("\n");

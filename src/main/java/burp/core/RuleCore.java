@@ -17,6 +17,8 @@ public class RuleCore {
 
     public static final String ANY = "*";
     public static final String ANY_REGEXP = "(.*)";
+
+    // 标记Http请求头中的cookie
     public static final String COOKIE_HEADER_FLAG = "cookie: ";
 
     // 存储规则的集合
@@ -36,6 +38,7 @@ public class RuleCore {
             if (rule.getType() == RuleTypeOption.HEADER) {
                 httpHeaderOptionAssembly(rule, metaDataHeaders);
             } else if (rule.getType() == RuleTypeOption.BODY) {
+                // 直接替换字符
                 return new String(body).replaceAll(rule.getKeyName(), rule.getKeyValue());
             } else {
                 // 遍历所有的头信息

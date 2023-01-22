@@ -11,10 +11,10 @@ import java.util.*;
  */
 public class UserAgentCore {
 
-    // PC UserAgent
+    // 存储PC端UserAgent
     public static final LinkedList<String> pcUserAgent = new LinkedList<>();
 
-    // Mobile UserAgent
+    // 存储Mobile端UserAgent
     public static final LinkedList<String> mobileUserAgent = new LinkedList<>();
 
     /**
