@@ -6,7 +6,7 @@
 
 **BurpHttpHelper**是一款Burpsuite插件，主要用于简化和解决Burpsuite对Http的一些操作.
 
-目前实现: `HttpHeader增删改` `HttpCookie` `随机UserAgent` `RepeaterResponse自动解码` `丢弃特定数据包`
+目前实现: `HttpHeader增删改` `HttpCookie增删改` `HttpBody替换` `随机UserAgent` `RepeaterResponse自动解码` `丢弃特定数据包`
 
 [README](README.md) | [文档](README_CN.md)
 
@@ -14,7 +14,7 @@
 
 * ~~HttpHeader增删改~~
 * ~~HttpCookie增删改~~
-* HttpBody增删改
+* ~~HttpBody替换~~
 * ~~随机UserAgent~~
 * ~~RepeaterResponse自动解码unicode、url编码、html编码~~
 * ~~默认配置(常见信息泄露头)~~
