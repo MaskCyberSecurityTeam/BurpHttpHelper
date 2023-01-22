@@ -20,7 +20,7 @@ public abstract class BurpPanel extends JPanel {
     // 配置文件绝对路径
     private String configFilePath;
 
-    private IBurpExtenderCallbacks iBurpExtenderCallbacks;
+    protected IBurpExtenderCallbacks iBurpExtenderCallbacks;
 
     /**
      * 空参构造，用于lombok生成代码，实际的BurpPanel子类，应继承有参数的那个构造函数。
