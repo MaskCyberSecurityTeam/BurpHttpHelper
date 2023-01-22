@@ -18,6 +18,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.FileWriter;
 import java.util.Arrays;
+import java.util.regex.Pattern;
 
 /**
  * 插件主页面
@@ -121,5 +122,5 @@ public class Gui extends JPanel {
             JOptionPane.showMessageDialog(this, "配置文件保存失败(Config File Save Fail!)", "提示(Tip)", JOptionPane.WARNING_MESSAGE);
         }
     }
-    
+
 }

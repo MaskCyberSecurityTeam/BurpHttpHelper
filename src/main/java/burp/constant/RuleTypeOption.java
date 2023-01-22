@@ -8,7 +8,7 @@ package burp.constant;
  */
 public enum RuleTypeOption {
 
-    HEADER("header"), COOKIE("cookie");
+    HEADER("header"), COOKIE("cookie"), BODY("body");
 
     private String text;
 

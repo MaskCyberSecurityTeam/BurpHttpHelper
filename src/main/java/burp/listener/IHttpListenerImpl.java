@@ -5,6 +5,7 @@ import burp.core.AutoDecodeCore;
 import burp.core.RuleCore;
 import burp.core.UserAgentCore;
 import burp.Gui;
+import cn.hutool.core.util.StrUtil;
 
 import java.util.*;
 
@@ -53,8 +54,11 @@ public class IHttpListenerImpl implements IHttpListener {
                     UserAgentCore.assembly(headers, gui);
                 }
 
-                // 处理Header规则
-                RuleCore.assembly(headers, iRequestInfo.getUrl());
+                // 处理Http协议规则
+                String newBody = RuleCore.assembly(headers, iRequestInfo.getUrl(), body);
+                if(newBody != null) {
+                    body = newBody.getBytes();
+                }
 
                 // 构造新请求
                 byte[] newReq = helpers.buildHttpMessage(headers, body);

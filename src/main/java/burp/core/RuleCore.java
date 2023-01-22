@@ -22,7 +22,7 @@ public class RuleCore {
     // 存储规则的集合
     public static final Vector<Rule> activeRuleData = new Vector<>();
 
-    public static void assembly(final List<String> metaDataHeaders, final URL url) {
+    public static String assembly(final List<String> metaDataHeaders, final URL url, byte[] body) {
         // 遍历规则
         for (Rule rule : activeRuleData) {
 
@@ -35,6 +35,8 @@ public class RuleCore {
             // 区分规则要操作的类型
             if (rule.getType() == RuleTypeOption.HEADER) {
                 httpHeaderOptionAssembly(rule, metaDataHeaders);
+            } else if(rule.getType() == RuleTypeOption.BODY) {
+                return new String(body).replaceAll(rule.getKeyName(), rule.getKeyValue());
             } else {
                 // 遍历所有的头信息
                 for (int i = 0; i < metaDataHeaders.size(); i++) {
@@ -50,6 +52,7 @@ public class RuleCore {
                 }
             }
         }
+        return null;
     }
 
     /**
