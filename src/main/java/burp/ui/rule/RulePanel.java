@@ -56,6 +56,13 @@ public class RulePanel extends BurpPanel {
 
     public static final RuleTable table = new RuleTable();
 
+    // 文本框默认提示信息
+    public static final String URL_TEXT_DEFAULT_PLACEHOLDER = "https://*mask-sec.com";
+    public static final String KEY_NAME_DEFAULT_PLACEHOLDER = "User-Agent";
+    public static final String KEY_VALUE_DEFAULT_PLACEHOLDER = "MaskSecAgent";
+    public static final String NEW_VALUE_DEFAULT_PLACEHOLDER = "需要删除填空即可";
+
+
     public RulePanel(final IBurpExtenderCallbacks iBurpExtenderCallbacks) {
         super(iBurpExtenderCallbacks);
 
@@ -129,7 +136,7 @@ public class RulePanel extends BurpPanel {
         modifyButton.addActionListener(e -> SwingUtilities.invokeLater(() -> {
             Rule rule = table.getSelectedItem();
             if (rule == null) {
-                JOptionPane.showMessageDialog(this, "请选择需要修改的数据(Please select row)!");
+                JOptionPane.showMessageDialog(this, "请选择需要修改的数据(Please Select Row)!");
             } else {
                 ruleFormWindow(rule);
             }
@@ -140,7 +147,7 @@ public class RulePanel extends BurpPanel {
             if (index != -1) {
                 table.removeSelectedItem();
             } else {
-                JOptionPane.showMessageDialog(this, "请选择需要删除的数据(Please select row)!");
+                JOptionPane.showMessageDialog(this, "请选择需要删除的数据(Please Select Row)!");
             }
         });
     }
@@ -198,9 +205,9 @@ public class RulePanel extends BurpPanel {
         JButton submitButton = new JButton("提交(Submit)");
 
         // Placeholder文本
-        urlTextField.setPlaceholder("https://*mask-sec.com");
-        keyNameTextField.setPlaceholder("User-Agent");
-        keyValueTextField.setPlaceholder("MaskSecAgent");
+        urlTextField.setPlaceholder(URL_TEXT_DEFAULT_PLACEHOLDER);
+        keyNameTextField.setPlaceholder(KEY_NAME_DEFAULT_PLACEHOLDER);
+        keyValueTextField.setPlaceholder(KEY_VALUE_DEFAULT_PLACEHOLDER);
 
         // 表单布局
         JPanel panel = new JPanel(new MigLayout("", "[][grow]"));
@@ -211,12 +218,12 @@ public class RulePanel extends BurpPanel {
         JLabel actionLabel = new JLabel("动作(Action): ");
         panel.add(urlLabel, "cell 0 0");
         panel.add(urlTextField, "cell 1 0, grow");
-        panel.add(keyNameLabel, "cell 0 1");
-        panel.add(keyNameTextField, "cell 1 1, grow");
-        panel.add(keyValueLabel, "cell 0 2");
-        panel.add(keyValueTextField, "cell 1 2, grow");
-        panel.add(typeLabel, "cell 0 3");
-        panel.add(typeComboBox, "cell 1 3, grow, wrap");
+        panel.add(typeLabel, "cell 0 1");
+        panel.add(typeComboBox, "cell 1 1, grow, wrap");
+        panel.add(keyNameLabel, "cell 0 2");
+        panel.add(keyNameTextField, "cell 1 2, grow");
+        panel.add(keyValueLabel, "cell 0 3");
+        panel.add(keyValueTextField, "cell 1 3, grow");
         panel.add(actionLabel, "cell 0 4");
         panel.add(actionComboBox, "cell 1 4, grow, wrap");
         panel.add(submitButton, "span, grow");
@@ -242,13 +249,7 @@ public class RulePanel extends BurpPanel {
                 table.updateUI();
             } else {
                 // 添加新规则到表格中
-                Rule newRule = Rule.builder()
-                        .url(urlTextField.getText())
-                        .keyName(keyNameTextField.getText())
-                        .keyValue(keyValueTextField.getText())
-                        .type((RuleTypeOption) typeComboBox.getSelectedItem())
-                        .action((RuleActionOption) actionComboBox.getSelectedItem())
-                        .id(table.getRowCount()).build();
+                Rule newRule = Rule.builder().url(urlTextField.getText()).keyName(keyNameTextField.getText()).keyValue(keyValueTextField.getText()).type((RuleTypeOption) typeComboBox.getSelectedItem()).action((RuleActionOption) actionComboBox.getSelectedItem()).id(table.getRowCount()).build();
                 table.addRow(newRule);
             }
             formWindow.dispose();
@@ -265,11 +266,18 @@ public class RulePanel extends BurpPanel {
                 // 切换显示的字符
                 JComboBox source = (JComboBox) e.getSource();
                 if (source.getSelectedItem() == RuleTypeOption.BODY) {
+                    actionLabel.setVisible(false);
+                    actionComboBox.setVisible(false);
                     keyNameLabel.setText("旧值(OldValue)");
                     keyValueLabel.setText("新值(NewValue)");
+                    keyValueTextField.setPlaceholder(NEW_VALUE_DEFAULT_PLACEHOLDER);
                 } else {
+                    actionLabel.setVisible(true);
+                    actionComboBox.setVisible(true);
                     keyNameLabel.setText("键名(KeyName)");
                     keyValueLabel.setText("键值(KeyValue)");
+                    keyNameTextField.setPlaceholder(KEY_NAME_DEFAULT_PLACEHOLDER);
+                    keyValueTextField.setPlaceholder(KEY_VALUE_DEFAULT_PLACEHOLDER);
                 }
                 panel.updateUI();
             }

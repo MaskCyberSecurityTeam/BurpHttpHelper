@@ -1,6 +1,8 @@
 package burp.ui.rule;
 
 import burp.bean.Rule;
+import burp.constant.RuleActionOption;
+import burp.constant.RuleTypeOption;
 import burp.core.RuleCore;
 import burp.ui.component.BeanTable;
 
@@ -32,6 +34,10 @@ public class RuleTable extends BeanTable<Rule> {
             case 4:
                 return item.getType();
             case 5:
+                // 如果是处理BODY的数据，则动作栏显示为MODIFY。
+                if (item.getType() == RuleTypeOption.BODY) {
+                    return RuleActionOption.MODIFY;
+                }
                 return item.getAction();
             case 6:
                 return item.getActive();
