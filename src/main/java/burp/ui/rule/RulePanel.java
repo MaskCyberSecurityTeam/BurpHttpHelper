@@ -16,6 +16,8 @@ import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.PopupMenuEvent;
+import javax.swing.event.PopupMenuListener;
 import java.awt.*;
 import java.util.Vector;
 
@@ -50,7 +52,7 @@ public class RulePanel extends BurpPanel {
     private JCheckBox spiderToolCheckBox;
     private JCheckBox suiteToolCheckBox;
     private JCheckBox targetToolCheckBox;
-    private JPanel    listenerConfigPanel;
+    private JPanel listenerConfigPanel;
 
     public static final RuleTable table = new RuleTable();
 
@@ -200,16 +202,22 @@ public class RulePanel extends BurpPanel {
         keyNameTextField.setPlaceholder("User-Agent");
         keyValueTextField.setPlaceholder("MaskSecAgent");
 
+        // 表单布局
         JPanel panel = new JPanel(new MigLayout("", "[][grow]"));
-        panel.add(new JLabel("地址(URL): "), "cell 0 0");
+        JLabel urlLabel = new JLabel("地址(URL): ");
+        JLabel keyNameLabel = new JLabel("键名(KeyName): ");
+        JLabel keyValueLabel = new JLabel("键值(KeyValue): ");
+        JLabel typeLabel = new JLabel("类型(Type): ");
+        JLabel actionLabel = new JLabel("动作(Action): ");
+        panel.add(urlLabel, "cell 0 0");
         panel.add(urlTextField, "cell 1 0, grow");
-        panel.add(new JLabel("键名(KeyName): "), "cell 0 1");
+        panel.add(keyNameLabel, "cell 0 1");
         panel.add(keyNameTextField, "cell 1 1, grow");
-        panel.add(new JLabel("键值(KeyValue): "), "cell 0 2");
+        panel.add(keyValueLabel, "cell 0 2");
         panel.add(keyValueTextField, "cell 1 2, grow");
-        panel.add(new JLabel("类型(Type): "), "cell 0 3");
+        panel.add(typeLabel, "cell 0 3");
         panel.add(typeComboBox, "cell 1 3, grow, wrap");
-        panel.add(new JLabel("动作(Action): "), "cell 0 4");
+        panel.add(actionLabel, "cell 0 4");
         panel.add(actionComboBox, "cell 1 4, grow, wrap");
         panel.add(submitButton, "span, grow");
 
@@ -240,11 +248,36 @@ public class RulePanel extends BurpPanel {
                         .keyValue(keyValueTextField.getText())
                         .type((RuleTypeOption) typeComboBox.getSelectedItem())
                         .action((RuleActionOption) actionComboBox.getSelectedItem())
-                        .id(table.getRowCount())
-                        .build();
+                        .id(table.getRowCount()).build();
                 table.addRow(newRule);
             }
             formWindow.dispose();
+        });
+
+        typeComboBox.addPopupMenuListener(new PopupMenuListener() {
+            @Override
+            public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
+
+            }
+
+            @Override
+            public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
+                // 切换显示的字符
+                JComboBox source = (JComboBox) e.getSource();
+                if (source.getSelectedItem() == RuleTypeOption.BODY) {
+                    keyNameLabel.setText("旧值(OldValue)");
+                    keyValueLabel.setText("新值(NewValue)");
+                } else {
+                    keyNameLabel.setText("键名(KeyName)");
+                    keyValueLabel.setText("键值(KeyValue)");
+                }
+                panel.updateUI();
+            }
+
+            @Override
+            public void popupMenuCanceled(PopupMenuEvent e) {
+
+            }
         });
 
         formWindow.setContentPane(panel);

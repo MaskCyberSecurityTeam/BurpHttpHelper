@@ -44,8 +44,8 @@ public class RuleTable extends BeanTable<Rule> {
         final Vector<String> columnName = new Vector<>();
         columnName.addElement("编号(ID)");
         columnName.addElement("地址(URL)");
-        columnName.addElement("键名(KeyName)");
-        columnName.addElement("键值(KeyValue)");
+        columnName.addElement("键名/旧值(KeyName/OldValue)");
+        columnName.addElement("键值/新值(KeyValue/NewValue)");
         columnName.addElement("类型(Type)");
         columnName.addElement("动作(Action)");
         columnName.addElement("状态(State)");
