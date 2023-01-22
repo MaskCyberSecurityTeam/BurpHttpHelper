@@ -112,7 +112,7 @@
                 <java.version>11</java.version>
                 <miglayout-swing.version>11.0</miglayout-swing.version>
                 <compiler-jdk>JDK11</compiler-jdk>
-                <javac-path>/Library/Java/JavaVirtualMachines/jdk-11.0.16.jdk/Contents/Home/bin/javac</javac-path>
+                <javac-path>/Library/Java/JavaVirtualMachines/jdk-11.0.16.1.jdk/Contents/Home/bin/javac</javac-path>
             </properties>
         </profile>
         <profile>
